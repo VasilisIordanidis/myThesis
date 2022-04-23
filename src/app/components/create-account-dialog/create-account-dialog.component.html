@@ -1,0 +1,40 @@
+<h2 mat-dialog-title>Create Account</h2>
+<mat-dialog-content>
+  <form [formGroup]="createAccountForm">
+    <h6>Personal Information</h6>
+    <mat-form-field appearance="fill">
+      <mat-label>Enter your name</mat-label>
+      <input matInput formControlName="firstName" />
+    </mat-form-field>
+    <br />
+    <mat-form-field appearance="fill">
+      <mat-label>Enter your surname</mat-label>
+      <input matInput formControlName="lastName" />
+    </mat-form-field>
+    <br />
+    <mat-form-field appearance="fill">
+      <mat-label>Enter your email</mat-label>
+      <input
+        matInput
+        placeholder="example@domain.com"
+        formControlName="email"
+      />
+    </mat-form-field>
+    <br />
+    <mat-divider></mat-divider>
+    <h6>Account details</h6>
+    <mat-form-field appearance="fill">
+      <mat-label>username</mat-label>
+      <input matInput formControlName="username" />
+    </mat-form-field>
+    <br />
+    <mat-form-field appearance="fill">
+      <mat-label>password</mat-label>
+      <input matInput type="password" formControlName="password" />
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button>Cancel</button>
+  <button mat-button>Submit</button>
+</mat-dialog-actions>

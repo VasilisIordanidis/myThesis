@@ -1,0 +1,13 @@
+<mat-form-field appearance="outline" [formGroup]="searchForm">
+  <mat-label>Where to?</mat-label>
+  <input
+    #autocomplete
+    matInput
+    id="autocomplete"
+    placeholder="Search ..."
+    formControlName="city"
+  />
+  <button mat-icon-button matSuffix (click)="onSearchIntent()">
+    <mat-icon>search</mat-icon>
+  </button>
+</mat-form-field>

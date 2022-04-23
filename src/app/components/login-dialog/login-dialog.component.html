@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>Log in to your account</h2>
+<mat-dialog-content>
+  <form [formGroup]="loginForm">
+    <mat-form-field appearance="fill">
+      <mat-label>username</mat-label>
+      <input matInput />
+    </mat-form-field>
+    <br />
+    <mat-form-field appearance="fill">
+      <mat-label>password</mat-label>
+      <input matInput type="password" />
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button>Cancel</button>
+  <button mat-button>Submit</button>
+</mat-dialog-actions>

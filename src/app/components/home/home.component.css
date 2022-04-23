@@ -1,0 +1,11 @@
+.list {
+  width: 35%;
+  height: 85%;
+  float: left;
+}
+
+.map {
+  width: 65%;
+  height: 85%;
+  display: inline-block;
+}

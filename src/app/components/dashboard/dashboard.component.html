@@ -1,0 +1,23 @@
+<div class="container">
+  <h1>myThesis</h1>
+  <app-search></app-search>
+  <div class="menu">
+    <mat-divider vertical="true"></mat-divider>
+    <button mat-flat-button>
+      Saved
+      <mat-icon>favorite</mat-icon>
+    </button>
+    <mat-divider vertical="true"></mat-divider>
+    <button mat-flat-button [matMenuTriggerFor]="menu">
+      Profile
+      <mat-icon>account_circle</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="openLoginDialog()">Log-in</button>
+      <button mat-menu-item (click)="openCreateAccountDialog()">
+        Create account
+      </button>
+    </mat-menu>
+    <mat-divider vertical="true"></mat-divider>
+  </div>
+</div>
