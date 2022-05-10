@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { PlaceResult } from '../view-models/PlaceResults';
 
 @Injectable({
   providedIn: 'root',
@@ -7,15 +9,22 @@ export class PlacesService {
   private places!: google.maps.places.PlacesService;
   private map!: google.maps.Map;
   private autocomplete!: google.maps.places.Autocomplete;
-
+  private markers: google.maps.Marker[] = [];
+  private infoWindow!: google.maps.InfoWindow;
+  private MARKER_PATH =
+    'https://developers.google.com/maps/documentation/javascript/images/marker_green';
+  state: BehaviorSubject<PlaceResult[]> = new BehaviorSubject(
+    [] as PlaceResult[]
+  );
+  private resultView: PlaceResult[] = [];
   constructor() {}
 
-  setMap(map: google.maps.Map) {
+  onInitialMapIntent(map: google.maps.Map) {
     this.map = map;
     this.places = new google.maps.places.PlacesService(map);
   }
 
-  setAutocomplete(autocomplete: google.maps.places.Autocomplete) {
+  onInitialAutocompleteIntent(autocomplete: google.maps.places.Autocomplete) {
     this.autocomplete = autocomplete;
   }
 
@@ -26,7 +35,7 @@ export class PlacesService {
       this.map.setZoom(15);
       this.search();
     } else {
-      console.log('fml');
+      window.alert('Something went wrong try again');
     }
   }
 
@@ -44,15 +53,91 @@ export class PlacesService {
         pagination: google.maps.places.PlaceSearchPagination | null
       ) => {
         if (status === google.maps.places.PlacesServiceStatus.OK && results) {
-          for (let item of results) {
-            new google.maps.Marker({
-              position: item.geometry?.location,
-              animation: google.maps.Animation.DROP,
-              map: this.map,
-            });
+          if (this.markers.length > 0) {
+            this.clearMarkers();
+            this.resultView = [];
+            this.state.next(this.resultView);
           }
+          for (let item of results) {
+            console.log(item);
+
+            // let letter = String.fromCharCode(
+            //   'A'.charCodeAt(0) + (results.indexOf(item) % 26)
+            // );
+            // let icon = this.MARKER_PATH + letter + '.png';
+            // this.markers.push(
+            //   new google.maps.Marker({
+            //     position: item.geometry?.location,
+            //     animation: google.maps.Animation.DROP,
+            //     map: this.map,
+            //     icon: icon,
+            //   })
+            // );
+            this.placeMarkers(item, results.indexOf(item));
+            let imgHandler: string[] = [];
+            item.photos?.forEach((img) =>
+              imgHandler.push(
+                img.getUrl({
+                  maxHeight: 100,
+                  maxWidth: 100,
+                } as google.maps.places.PhotoOptions)
+              )
+            );
+            let placeView = {
+              marker_icon: this.markers[results.indexOf(item)].getIcon(),
+              name: item.name,
+              rating: item.rating,
+              address: item.vicinity,
+              photos: imgHandler,
+              total_reviews: item?.user_ratings_total,
+            } as PlaceResult;
+            this.resultView.push(placeView);
+            // google.maps.event.addListener(
+            //   this.markers[results.indexOf(item)],
+            //   'click',
+            //   this.showInfoWindow(item, this.markers[results.indexOf(item)])
+            // );
+          }
+          this.state.next(this.resultView);
         }
       }
     );
   }
+
+  clearMarkers() {
+    for (let marker of this.markers) {
+      marker.setMap(null);
+    }
+    this.markers = [];
+  }
+
+  placeMarkers(place: google.maps.places.PlaceResult, index: number) {
+    let letter = String.fromCharCode('A'.charCodeAt(0) + (index % 26));
+    let icon = this.MARKER_PATH + letter + '.png';
+    this.markers.push(
+      new google.maps.Marker({
+        position: place.geometry?.location,
+        animation: google.maps.Animation.DROP,
+        map: this.map,
+        icon: icon,
+      })
+    );
+  }
+  // showInfoWindow(
+  //   result: google.maps.places.PlaceResult,
+  //   marker: google.maps.Marker
+  // ): any {
+  //   if (result.place_id != undefined) {
+  //     this.places.getDetails({ placeId: result.place_id }, (place, status) => {
+  //       if (status !== google.maps.places.PlacesServiceStatus.OK) {
+  //         return;
+  //       }
+  //       this.infoWindow = new google.maps.InfoWindow({
+  //         content: result.name,
+  //       });
+  //       this.infoWindow.open(this.map, marker);
+  //       this.buildInfoWindowContent(place);
+  //     });
+  //   }
+  // }
 }

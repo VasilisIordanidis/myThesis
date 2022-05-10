@@ -18,7 +18,7 @@ export class SearchPresenter {
   onIntent(intent: Intent) {
     if (intent instanceof InitialIntent) {
       intent.getAutocomplete();
-      this.service.setAutocomplete(intent.getAutocomplete());
+      this.service.onInitialAutocompleteIntent(intent.getAutocomplete());
     }
     if (intent instanceof SearchIntent) {
       this.service.onPlaceChanged();

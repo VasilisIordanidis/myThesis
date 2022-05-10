@@ -9,3 +9,30 @@
   height: 85%;
   display: inline-block;
 }
+.card {
+  display: grid;
+  grid-template-areas:
+    "marker header header header-img"
+    "marker content . img"
+    "marker content . img"
+    "marker content . img";
+  place-items: center;
+  grid-gap: 1%;
+}
+.card-marker {
+  place-content: center;
+
+  grid-area: marker;
+}
+
+.card-header {
+  grid-area: header;
+  place-content: strech;
+  display: flex;
+  width: 100%;
+}
+.card-content {
+  grid-area: content;
+  display: flex;
+  flex-direction: column;
+}

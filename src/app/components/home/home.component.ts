@@ -4,6 +4,7 @@ import { HomePresenter } from './HomePresenter';
 import { InitialIntent } from './InitialIntent';
 import { tap } from 'rxjs/operators';
 import { PlacesService } from 'src/app/service/places.service';
+import { PlaceResult } from 'src/app/view-models/PlaceResults';
 
 @Component({
   selector: 'app-home',
@@ -21,7 +22,7 @@ export class HomeComponent implements OnInit {
   //   minZoom: 8,
   // };
   gmap!: any;
-
+  attractions!: PlaceResult[];
   constructor(
     private presenter: HomePresenter,
     private service: PlacesService
@@ -41,5 +42,9 @@ export class HomeComponent implements OnInit {
     );
     let intent = new InitialIntent(this.gmap);
     this.presenter.onIntent(intent);
+    this.service.state
+      .asObservable()
+      .pipe(tap((res) => (this.attractions = res)))
+      .subscribe();
   }
 }

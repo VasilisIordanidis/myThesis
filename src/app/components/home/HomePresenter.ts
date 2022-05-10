@@ -16,7 +16,7 @@ export class HomePresenter {
 
   onIntent(intent: Intent) {
     if (intent instanceof InitialIntent) {
-      this.service.setMap(intent.getMap());
+      this.service.onInitialMapIntent(intent.getMap());
     }
   }
 }

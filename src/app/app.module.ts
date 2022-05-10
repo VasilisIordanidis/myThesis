@@ -11,6 +11,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
+
 // import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 
 import { AppComponent } from './app.component';
@@ -48,6 +50,7 @@ import { SearchComponent } from './components/search/search.component';
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
+    MatCardModule,
     //GooglePlaceModule,
   ],
   providers: [PlacesService],
