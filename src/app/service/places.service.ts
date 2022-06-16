@@ -92,11 +92,6 @@ export class PlacesService {
               total_reviews: item?.user_ratings_total,
             } as PlaceResult;
             this.resultView.push(placeView);
-            // google.maps.event.addListener(
-            //   this.markers[results.indexOf(item)],
-            //   'click',
-            //   this.showInfoWindow(item, this.markers[results.indexOf(item)])
-            // );
           }
           this.state.next(this.resultView);
         }
@@ -123,21 +118,4 @@ export class PlacesService {
       })
     );
   }
-  // showInfoWindow(
-  //   result: google.maps.places.PlaceResult,
-  //   marker: google.maps.Marker
-  // ): any {
-  //   if (result.place_id != undefined) {
-  //     this.places.getDetails({ placeId: result.place_id }, (place, status) => {
-  //       if (status !== google.maps.places.PlacesServiceStatus.OK) {
-  //         return;
-  //       }
-  //       this.infoWindow = new google.maps.InfoWindow({
-  //         content: result.name,
-  //       });
-  //       this.infoWindow.open(this.map, marker);
-  //       this.buildInfoWindowContent(place);
-  //     });
-  //   }
-  // }
 }
