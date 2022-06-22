@@ -24,6 +24,8 @@ import { CreateAccountDialogComponent } from './components/create-account-dialog
 import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
 import { PlacesService } from './service/places.service';
 import { SearchComponent } from './components/search/search.component';
+import { UserService } from './service/user.service';
+import { AttractionService } from './service/attraction.service';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,7 @@ import { SearchComponent } from './components/search/search.component';
     MatCardModule,
     //GooglePlaceModule,
   ],
-  providers: [PlacesService],
+  providers: [PlacesService, UserService, AttractionService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

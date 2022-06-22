@@ -31,13 +31,13 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   createUser(
-    name: string,
-    surname: string,
+    firstName: string,
+    lastName: string,
     email: string,
     username: string,
     password: string
   ) {
-    const body = { name, surname, email, username, password };
+    const body = { firstName, lastName, email, username, password };
     return this.http
       .post(this.apiUrl, body)
       .pipe(catchError(UserService.handleError));

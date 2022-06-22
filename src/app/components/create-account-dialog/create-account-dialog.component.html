@@ -35,6 +35,6 @@
   </form>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button>Cancel</button>
-  <button mat-button>Submit</button>
+  <button mat-button (click)="closeDialog()">Cancel</button>
+  <button mat-button (click)="onCreateUserIntent()">Submit</button>
 </mat-dialog-actions>
