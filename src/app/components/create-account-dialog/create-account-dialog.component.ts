@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { mergeMap } from 'rxjs/operators';
 import { Intent } from 'src/app/models/Intent';
+import { ResultService } from 'src/app/service/result.service';
 import { UserService } from 'src/app/service/user.service';
 
 @Component({
@@ -13,7 +15,7 @@ export class CreateAccountDialogComponent implements OnInit {
   ngOnInit(): void {}
 
   constructor(
-    private userService: UserService,
+    private resultService: ResultService,
     private dialogRef: MatDialogRef<CreateAccountDialogComponent>,
     private formBuilder: FormBuilder
   ) {}
@@ -42,8 +44,6 @@ export class CreateAccountDialogComponent implements OnInit {
     let username = this.createAccountForm.get('username')?.value;
     let password = this.createAccountForm.get('password')?.value;
 
-    this.userService
-      .createUser(firstName, lastName, email, username, password)
-      .subscribe();
+    this.dialogRef.close;
   }
 }
