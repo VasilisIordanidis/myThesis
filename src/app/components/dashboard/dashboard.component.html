@@ -8,7 +8,7 @@
       <mat-icon>favorite</mat-icon>
     </button>
     <mat-divider vertical="true"></mat-divider>
-    <button mat-flat-button [matMenuTriggerFor]="menu">
+    <button mat-flat-button [matMenuTriggerFor]="menu" *ngIf="login">
       Profile
       <mat-icon>account_circle</mat-icon>
     </button>
@@ -17,6 +17,14 @@
       <button mat-menu-item (click)="openCreateAccountDialog()">
         Create account
       </button>
+    </mat-menu>
+    <button mat-flat-button [matMenuTriggerFor]="logmenu" *ngIf="!login">
+      Username
+      <mat-icon>account_circle</mat-icon>
+    </button>
+    <mat-menu #logmenu="matMenu">
+      <button mat-menu-item (click)="openLoginDialog()">Info</button>
+      <button mat-menu-item (click)="openCreateAccountDialog()">Log out</button>
     </mat-menu>
     <mat-divider vertical="true"></mat-divider>
   </div>
