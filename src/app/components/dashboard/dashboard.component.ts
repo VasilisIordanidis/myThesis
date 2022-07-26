@@ -3,8 +3,10 @@ import { CreateAccountDialogComponent } from '../create-account-dialog/create-ac
 import { MatDialog } from '@angular/material/dialog';
 import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
 import { ResultService } from 'src/app/service/result.service';
-import { AccountView } from 'src/app/models/AccountView';
+import { LogInPreview } from 'src/app/models/LogInPreview';
 import { Subject } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { AccountView } from 'src/app/view-models/AccountView';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,8 +19,17 @@ export class DashboardComponent implements OnInit {
     private resultService: ResultService
   ) {}
   login: boolean = false;
-  state: Subject<AccountView> = new Subject();
-  ngOnInit(): void {}
+  accountView!: AccountView;
+  ngOnInit(): void {
+    this.resultService.state
+      .pipe(
+        tap((value) => {
+          this.login = value.isLoggedIn;
+          this.accountView = value.accountView;
+        })
+      )
+      .subscribe();
+  }
 
   openCreateAccountDialog() {
     this.dialog.open(CreateAccountDialogComponent);

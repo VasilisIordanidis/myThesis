@@ -6,7 +6,7 @@ import {
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { AccountView } from '../models/AccountView';
+import { AccountView } from '../view-models/AccountView';
 
 @Injectable({
   providedIn: 'root',

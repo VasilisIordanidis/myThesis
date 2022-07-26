@@ -5,6 +5,7 @@ import { mergeMap } from 'rxjs/operators';
 import { Intent } from 'src/app/models/Intent';
 import { ResultService } from 'src/app/service/result.service';
 import { UserService } from 'src/app/service/user.service';
+import { CreateAccountIntent } from './CreateAccountIntent';
 
 @Component({
   selector: 'app-create-account-dialog',
@@ -43,7 +44,14 @@ export class CreateAccountDialogComponent implements OnInit {
     let email = this.createAccountForm.get('email')?.value;
     let username = this.createAccountForm.get('username')?.value;
     let password = this.createAccountForm.get('password')?.value;
-
+    let intent = new CreateAccountIntent(
+      firstName,
+      lastName,
+      email,
+      username,
+      password
+    );
+    this.resultService.onIntent(intent);
     this.dialogRef.close;
   }
 }
