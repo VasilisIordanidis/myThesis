@@ -19,13 +19,14 @@ export class DashboardComponent implements OnInit {
     private resultService: ResultService
   ) {}
   login: boolean = false;
-  accountView!: AccountView;
+  username!: string;
   ngOnInit(): void {
     this.resultService.state
       .pipe(
         tap((value) => {
           this.login = value.isLoggedIn;
-          this.accountView = value.accountView;
+          this.username = value.accountView.accountView.username;
+          console.log(value);
         })
       )
       .subscribe();

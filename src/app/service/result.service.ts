@@ -7,6 +7,7 @@ import { AttractionService } from './attraction.service';
 import { UserService } from './user.service';
 import { CreateAccountIntent } from '../components/create-account-dialog/CreateAccountIntent';
 import { concatMap, mergeMap, tap } from 'rxjs/operators';
+import { LogInIntent } from '../components/login-dialog/LogInIntent';
 
 @Injectable({
   providedIn: 'root',
@@ -36,7 +37,7 @@ export class ResultService {
               .login(intent.getUserName(), intent.getPassword())
               .pipe(
                 tap((accountView) => {
-                  console.log(accountView);
+                  //console.log(accountView);
 
                   this.state.next({
                     isLoggedIn: true,
@@ -45,6 +46,21 @@ export class ResultService {
                 })
               )
           )
+        )
+        .subscribe();
+    }
+
+    if (intent instanceof LogInIntent) {
+      this.userService
+        .login(intent.getUsername(), intent.getPassword())
+        .pipe(
+          tap((accountView) => {
+            //console.log(accountView);
+            this.state.next({
+              isLoggedIn: true,
+              accountView: accountView,
+            });
+          })
         )
         .subscribe();
     }

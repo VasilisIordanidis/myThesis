@@ -19,7 +19,7 @@
       </button>
     </mat-menu>
     <button mat-flat-button [matMenuTriggerFor]="logmenu" *ngIf="login">
-      Username
+      {{ this.username }}
       <mat-icon>account_circle</mat-icon>
     </button>
     <mat-menu #logmenu="matMenu">
