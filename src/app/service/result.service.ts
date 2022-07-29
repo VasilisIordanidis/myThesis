@@ -37,11 +37,14 @@ export class ResultService {
               .login(intent.getUserName(), intent.getPassword())
               .pipe(
                 tap((accountView) => {
-                  //console.log(accountView);
+                  console.log(accountView);
 
                   this.state.next({
                     isLoggedIn: true,
-                    accountView: accountView,
+                    account: {
+                      username: accountView.username,
+                      attractions: accountView.attractions,
+                    },
                   });
                 })
               )
@@ -55,10 +58,14 @@ export class ResultService {
         .login(intent.getUsername(), intent.getPassword())
         .pipe(
           tap((accountView) => {
-            //console.log(accountView);
+            console.log(accountView.username);
+
             this.state.next({
               isLoggedIn: true,
-              accountView: accountView,
+              account: {
+                username: accountView.username,
+                attractions: accountView.attractions,
+              },
             });
           })
         )

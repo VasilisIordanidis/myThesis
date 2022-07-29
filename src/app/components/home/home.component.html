@@ -9,7 +9,9 @@
           item.name
         }}</mat-card-title>
       </div>
-      <mat-icon style="grid-area: header-img">favorite_border</mat-icon>
+      <button mat-icon-button>
+        <mat-icon>favorite_border</mat-icon>
+      </button>
       <div class="card-content">
         <mat-card-content>Address: {{ item.address }}</mat-card-content>
         <mat-card-content>Rating : {{ item?.rating }} / 5</mat-card-content>

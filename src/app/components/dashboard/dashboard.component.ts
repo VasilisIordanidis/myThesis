@@ -25,7 +25,7 @@ export class DashboardComponent implements OnInit {
       .pipe(
         tap((value) => {
           this.login = value.isLoggedIn;
-          this.username = value.accountView.accountView.username;
+          this.username = value.account.username;
           console.log(value);
         })
       )
@@ -38,5 +38,9 @@ export class DashboardComponent implements OnInit {
 
   openLoginDialog() {
     this.dialog.open(LoginDialogComponent);
+  }
+
+  onLogOut() {
+    this.login = false;
   }
 }
