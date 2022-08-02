@@ -26,6 +26,7 @@ import { PlacesService } from './service/places.service';
 import { SearchComponent } from './components/search/search.component';
 import { UserService } from './service/user.service';
 import { AttractionService } from './service/attraction.service';
+import { AttractionListDialogComponent } from './components/attraction-list-dialog/attraction-list-dialog.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { AttractionService } from './service/attraction.service';
     CreateAccountDialogComponent,
     LoginDialogComponent,
     SearchComponent,
+    AttractionListDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,7 +55,6 @@ import { AttractionService } from './service/attraction.service';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatCardModule,
-    //GooglePlaceModule,
   ],
   providers: [PlacesService, UserService, AttractionService],
   bootstrap: [AppComponent],

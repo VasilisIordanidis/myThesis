@@ -1,4 +1,7 @@
 <div class="list">
+  <ng-template ngIf="attractions.lenght==0">
+    Select a city to view attractions
+  </ng-template>
   <ng-template ngIf="attractions.length > 0">
     <mat-card class="card" *ngFor="let item of attractions">
       <div class="card-marker">
@@ -9,7 +12,7 @@
           item.name
         }}</mat-card-title>
       </div>
-      <button mat-icon-button>
+      <button mat-icon-button (click)="onAddToAttractionList(item)">
         <mat-icon>favorite_border</mat-icon>
       </button>
       <div class="card-content">

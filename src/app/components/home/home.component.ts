@@ -1,10 +1,12 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { GoogleMap } from '@angular/google-maps';
+import { Component, OnInit } from '@angular/core';
 import { HomePresenter } from './HomePresenter';
 import { InitialIntent } from './InitialIntent';
 import { tap } from 'rxjs/operators';
 import { PlacesService } from 'src/app/service/places.service';
 import { PlaceResult } from 'src/app/view-models/PlaceResults';
+import { AttractionService } from 'src/app/service/attraction.service';
+import { ResultService } from 'src/app/service/result.service';
+import { AddToAttractionListIntent } from './AddToAttractionListIntent';
 
 @Component({
   selector: 'app-home',
@@ -13,19 +15,12 @@ import { PlaceResult } from 'src/app/view-models/PlaceResults';
   providers: [{ provide: HomePresenter, useClass: HomePresenter }],
 })
 export class HomeComponent implements OnInit {
-  // mapCenter!: google.maps.LatLngLiteral;
-  // mapOptions: google.maps.MapOptions = {
-  //   //center: this.mapCenter,
-  //   mapTypeId: 'hybrid',
-  //   disableDoubleClickZoom: true,
-  //   maxZoom: 15,
-  //   minZoom: 8,
-  // };
   gmap!: any;
   attractions!: PlaceResult[];
   constructor(
     private presenter: HomePresenter,
-    private service: PlacesService
+    private service: PlacesService,
+    private resultService: ResultService
   ) {}
 
   ngOnInit(): void {
@@ -46,5 +41,16 @@ export class HomeComponent implements OnInit {
       .asObservable()
       .pipe(tap((res) => (this.attractions = res)))
       .subscribe();
+  }
+
+  onAddToAttractionList(place: PlaceResult) {
+    let intent = new AddToAttractionListIntent(
+      place.name,
+      place.address,
+      place.photos,
+      place.rating,
+      place.total_reviews
+    );
+    this.resultService.onIntent(intent);
   }
 }
