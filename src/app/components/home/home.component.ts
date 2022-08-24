@@ -17,6 +17,8 @@ import { AddToAttractionListIntent } from './AddToAttractionListIntent';
 export class HomeComponent implements OnInit {
   gmap!: any;
   attractions!: PlaceResult[];
+  isLoggedIn!: boolean;
+  id!: string;
   constructor(
     private presenter: HomePresenter,
     private service: PlacesService,
@@ -37,20 +39,37 @@ export class HomeComponent implements OnInit {
     );
     let intent = new InitialIntent(this.gmap);
     this.presenter.onIntent(intent);
+
     this.service.state
       .asObservable()
       .pipe(tap((res) => (this.attractions = res)))
       .subscribe();
+
+    this.resultService.state
+      .asObservable()
+      .pipe(
+        tap((res) => {
+          this.isLoggedIn = res.isLoggedIn;
+          this.id = res.account.id;
+        })
+      )
+      .subscribe();
   }
 
   onAddToAttractionList(place: PlaceResult) {
-    let intent = new AddToAttractionListIntent(
-      place.name,
-      place.address,
-      place.photos,
-      place.rating,
-      place.total_reviews
-    );
-    this.resultService.onIntent(intent);
+    if (this.isLoggedIn == true) {
+      console.log(this.isLoggedIn);
+
+      let intent = new AddToAttractionListIntent(
+        place.name,
+        place.address,
+        place.photos,
+        place.rating,
+        place.total_reviews
+      );
+      this.resultService.onIntent(intent);
+    } else {
+      window.alert('Login first to save attractions');
+    }
   }
 }

@@ -10,7 +10,7 @@ export class PlacesService {
   private map!: google.maps.Map;
   private autocomplete!: google.maps.places.Autocomplete;
   private markers: google.maps.Marker[] = [];
-  private infoWindow!: google.maps.InfoWindow;
+  //private infoWindow!: google.maps.InfoWindow;
   private MARKER_PATH =
     'https://developers.google.com/maps/documentation/javascript/images/marker_green';
   state: BehaviorSubject<PlaceResult[]> = new BehaviorSubject(
@@ -59,7 +59,7 @@ export class PlacesService {
             this.state.next(this.resultView);
           }
           for (let item of results) {
-            console.log(item);
+            //console.log(item);
 
             // let letter = String.fromCharCode(
             //   'A'.charCodeAt(0) + (results.indexOf(item) % 26)

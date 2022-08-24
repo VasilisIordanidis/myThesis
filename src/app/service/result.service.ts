@@ -72,8 +72,6 @@ export class ResultService {
         .login(intent.getUsername(), intent.getPassword())
         .pipe(
           tap((accountView) => {
-            console.log(accountView.username);
-
             this.state.next({
               isLoggedIn: true,
               account: {

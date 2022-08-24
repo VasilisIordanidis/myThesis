@@ -1,8 +1,8 @@
 <div class="list">
-  <ng-template ngIf="attractions.lenght==0">
+  <p *ngIf="attractions.length === 0; else attractionList">
     Select a city to view attractions
-  </ng-template>
-  <ng-template ngIf="attractions.length > 0">
+  </p>
+  <ng-template #attractionList>
     <mat-card class="card" *ngFor="let item of attractions">
       <div class="card-marker">
         <img [src]="item.marker_icon" />
