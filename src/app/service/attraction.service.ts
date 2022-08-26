@@ -36,14 +36,14 @@ export class AttractionService {
     id: string,
     name: string,
     rating: number,
-    totalReview: number,
+    totalReviews: number,
     address: string,
-    imgUrl: string[]
+    imgUrl: string
   ) {
-    const body = { id, name, rating, totalReview, address, imgUrl };
-    const url = `${this.apiUrl}/user/${id}/attractions`;
+    const body = { id, name, rating, totalReviews, address, imgUrl };
+    const url = `${this.apiUrl}/${id}/attractions`;
     return this.http.post(url, body).pipe(
-      tap(() => this.subject.next()),
+      //tap(() => this.subject.next()),
       catchError(AttractionService.handleError)
     );
   }
@@ -54,19 +54,20 @@ export class AttractionService {
       .set('name', name)
       .set('address', address);
     let options = { params: params };
-    const url = `${this.apiUrl}/user/${id}/attractions`;
+    const url = `${this.apiUrl}/${id}/attractions`;
     return this.http.delete(url).pipe(
-      tap(() => this.subject.next()),
+      //tap(() => this.subject.next()),
       catchError(AttractionService.handleError)
     );
   }
 
   getAttractions(id: string): Observable<Attraction[]> {
-    const url = `${this.apiUrl}/user/${id}/attractions`;
+    const url = `${this.apiUrl}/${id}/attractions`;
     let a = this.http
       .get<Attraction[]>(url)
       .pipe(catchError(AttractionService.handleError));
-    let b = this.subject.pipe(mergeMap(() => a));
-    return merge(a, b);
+    //let b = this.subject.pipe(mergeMap(() => a));
+    //return merge(a, b);
+    return a;
   }
 }

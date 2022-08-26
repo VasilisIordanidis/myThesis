@@ -49,6 +49,8 @@ export class HomeComponent implements OnInit {
       .asObservable()
       .pipe(
         tap((res) => {
+          //console.log(res);
+
           this.isLoggedIn = res.isLoggedIn;
           this.id = res.account.id;
         })
@@ -58,12 +60,13 @@ export class HomeComponent implements OnInit {
 
   onAddToAttractionList(place: PlaceResult) {
     if (this.isLoggedIn == true) {
-      console.log(this.isLoggedIn);
-
+      //console.log(this.isLoggedIn);
+      console.log(place.photos[0]);
+      //place.photos;
       let intent = new AddToAttractionListIntent(
         place.name,
         place.address,
-        place.photos,
+        place.photos[0],
         place.rating,
         place.total_reviews
       );

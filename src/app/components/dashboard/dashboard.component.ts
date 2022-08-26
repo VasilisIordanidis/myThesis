@@ -26,7 +26,7 @@ export class DashboardComponent implements OnInit {
         tap((value) => {
           this.login = value.isLoggedIn;
           this.username = value.account.username;
-          console.log(value);
+          //console.log(value);
         })
       )
       .subscribe();

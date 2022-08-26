@@ -4,14 +4,14 @@ import { PlaceResult } from 'src/app/view-models/PlaceResults';
 export class AddToAttractionListIntent extends Intent {
   private name!: string;
   private address!: string;
-  private photoUrl!: string[];
+  private photoUrl!: string;
   private rating!: number;
   private review!: number;
 
   constructor(
     name: string,
     address: string,
-    photoUrl: string[],
+    photoUrl: string,
     rating: number,
     review: number
   ) {

@@ -6,7 +6,7 @@ import { LogInPreview } from '../models/LogInPreview';
 import { AttractionService } from './attraction.service';
 import { UserService } from './user.service';
 import { CreateAccountIntent } from '../components/create-account-dialog/CreateAccountIntent';
-import { concatMap, mergeMap, takeUntil, tap } from 'rxjs/operators';
+import { concatMap, map, mergeMap, takeUntil, tap } from 'rxjs/operators';
 import { LogInIntent } from '../components/login-dialog/LogInIntent';
 import { AddToAttractionListIntent } from '../components/home/AddToAttractionListIntent';
 
@@ -72,6 +72,7 @@ export class ResultService {
         .login(intent.getUsername(), intent.getPassword())
         .pipe(
           tap((accountView) => {
+            this.id = accountView.id;
             this.state.next({
               isLoggedIn: true,
               account: {
@@ -94,6 +95,9 @@ export class ResultService {
           intent.getReview(),
           intent.getAddress(),
           intent.getPhotoUrl()
+        )
+        .pipe(
+          map(() => this.attractionService.getAttractions(this.id).subscribe())
         )
         .subscribe();
     }
