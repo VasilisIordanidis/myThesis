@@ -1,1 +1,21 @@
-<p>attraction-list-dialog works!</p>
+<p *ngIf="isLoggedIn; else attractionList">Log in to view saved attractions</p>
+<ng-template #attractionList>
+  <mat-card class="card" *ngFor="let item of attractions">
+    <div class="card-header">
+      <mat-card-title style="place-self: start">{{ item.name }}</mat-card-title>
+    </div>
+    <button mat-icon-button>
+      <mat-icon>favorite_border</mat-icon>
+    </button>
+    <div class="card-content">
+      <mat-card-content>Address: {{ item.address }}</mat-card-content>
+      <mat-card-content>Rating : {{ item?.rating }} / 5</mat-card-content>
+      <mat-card-content>
+        Total ratings : {{ item.totalReviews }}
+      </mat-card-content>
+    </div>
+    <mat-card-content style="grid-area: img">
+      <img style="grid-area: img" [src]="item.imgUrl" />
+    </mat-card-content>
+  </mat-card>
+</ng-template>

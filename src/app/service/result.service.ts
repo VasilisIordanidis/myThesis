@@ -18,6 +18,7 @@ export class ResultService {
   //helper: Subject<any> = new Subject<any>();
   isLoggedIn: boolean = false;
   id: string = '';
+  username: string = '';
   constructor(
     private userService: UserService,
     private attractionService: AttractionService
@@ -73,6 +74,7 @@ export class ResultService {
         .pipe(
           tap((accountView) => {
             this.id = accountView.id;
+            this.username = accountView.username;
             this.state.next({
               isLoggedIn: true,
               account: {
@@ -97,7 +99,23 @@ export class ResultService {
           intent.getPhotoUrl()
         )
         .pipe(
-          map(() => this.attractionService.getAttractions(this.id).subscribe())
+          map(() => {
+            this.attractionService
+              .getAttractions(this.id)
+              .pipe(
+                tap((res) =>
+                  this.state.next({
+                    isLoggedIn: true,
+                    account: {
+                      id: this.id,
+                      username: this.username,
+                      attractions: res,
+                    },
+                  })
+                )
+              )
+              .subscribe();
+          })
         )
         .subscribe();
     }
