@@ -8,6 +8,7 @@ import { merge, Observable, Subject } from 'rxjs';
 import { throwError } from 'rxjs/internal/observable/throwError';
 import { catchError, mergeMap, tap } from 'rxjs/operators';
 import { Attraction } from '../models/Attraction';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -30,44 +31,60 @@ export class AttractionService {
     // Return an observable with a user-facing error message.
     return throwError('Something bad happened; please try again later.');
   }
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private userService: UserService) {
+    this.userService.accountId
+      .pipe(
+        tap((res) => {
+          this.apiUrl = `/api/user/${res}/attractions`;
+          console.log(this.apiUrl);
+        })
+      )
+      .subscribe();
+    console.log('Attraction service');
+  }
 
   addAttraction(
-    id: string,
+    //id: string,
     name: string,
     rating: number,
     totalReviews: number,
     address: string,
     imgUrl: string
   ) {
-    const body = { id, name, rating, totalReviews, address, imgUrl };
-    const url = `${this.apiUrl}/${id}/attractions`;
-    return this.http.post(url, body).pipe(
-      //tap(() => this.subject.next()),
+    const body = { name, rating, totalReviews, address, imgUrl };
+    //const url = `${this.apiUrl}/${id}/attractions`;
+
+    return this.http.post(this.apiUrl, body).pipe(
+      tap(() => this.subject.next()),
       catchError(AttractionService.handleError)
     );
   }
 
-  removeAttraction(id: string, name: string, address: string) {
+  removeAttraction(name: string, address: string) {
     let params = new HttpParams()
-      .set('id', id)
+      //.set('id', id)
       .set('name', name)
       .set('address', address);
-    let options = { params: params };
-    const url = `${this.apiUrl}/${id}/attractions`;
-    return this.http.delete(url).pipe(
-      //tap(() => this.subject.next()),
+    const body = {
+      name,
+      address,
+    };
+    let options = { body: body };
+    //const url = `${this.apiUrl}/${id}/attractions`;
+    return this.http.delete(this.apiUrl, options).pipe(
+      tap(() => this.subject.next()),
       catchError(AttractionService.handleError)
     );
   }
 
-  getAttractions(id: string): Observable<Attraction[]> {
-    const url = `${this.apiUrl}/${id}/attractions`;
-    let a = this.http
-      .get<Attraction[]>(url)
-      .pipe(catchError(AttractionService.handleError));
-    //let b = this.subject.pipe(mergeMap(() => a));
-    //return merge(a, b);
-    return a;
+  getAttractions(): Observable<Attraction[]> {
+    //const url = `${this.apiUrl}/${id}/attractions`;
+    console.log('ran getAttractions');
+
+    let a = this.http.get<Attraction[]>(this.apiUrl);
+    //.pipe(catchError(AttractionService.handleError));
+    let b = this.subject.pipe(mergeMap(() => a));
+    return merge(a, b);
+    //return a;
   }
 }

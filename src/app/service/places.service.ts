@@ -17,7 +17,9 @@ export class PlacesService {
     [] as PlaceResult[]
   );
   private resultView: PlaceResult[] = [];
-  constructor() {}
+  constructor() {
+    console.log('places service');
+  }
 
   onInitialMapIntent(map: google.maps.Map) {
     this.map = map;

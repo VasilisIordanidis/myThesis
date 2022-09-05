@@ -4,8 +4,8 @@ import {
   HttpErrorResponse,
   HttpParams,
 } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable, Subject, throwError } from 'rxjs';
+import { tap, catchError } from 'rxjs/operators';
 import { AccountView } from '../view-models/AccountView';
 
 @Injectable({
@@ -13,6 +13,7 @@ import { AccountView } from '../view-models/AccountView';
 })
 export class UserService {
   private apiUrl = '/api/user';
+  accountId: Subject<string> = new Subject();
   private static handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.
@@ -28,7 +29,9 @@ export class UserService {
     // Return an observable with a user-facing error message.
     return throwError('Something bad happened; please try again later.');
   }
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    console.log('User Service');
+  }
 
   createUser(
     firstName: string,
@@ -47,8 +50,13 @@ export class UserService {
     let params = new HttpParams()
       .set('username', username)
       .set('password', password);
-    return this.http
-      .get<AccountView>(this.apiUrl, { params })
-      .pipe(catchError(UserService.handleError));
+    return this.http.get<AccountView>(this.apiUrl, { params }).pipe(
+      tap((res) => this.accountId.next(res.id)),
+      catchError(UserService.handleError)
+    );
+  }
+
+  logout() {
+    this.accountId.next(undefined);
   }
 }

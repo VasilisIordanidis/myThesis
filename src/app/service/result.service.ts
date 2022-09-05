@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 import { AccountView } from '../view-models/AccountView';
 import { Intent } from '../models/Intent';
 import { LogInPreview } from '../models/LogInPreview';
@@ -9,20 +9,31 @@ import { CreateAccountIntent } from '../components/create-account-dialog/CreateA
 import { concatMap, map, mergeMap, takeUntil, tap } from 'rxjs/operators';
 import { LogInIntent } from '../components/login-dialog/LogInIntent';
 import { AddToAttractionListIntent } from '../components/home/AddToAttractionListIntent';
+import { LogOutIntent } from '../components/dashboard/LogOutIntent';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ResultService {
-  state: Subject<LogInPreview> = new Subject();
+  state: BehaviorSubject<LogInPreview> = new BehaviorSubject({
+    isLoggedIn: false,
+    account: {
+      id: '',
+      username: '',
+      attractions: [],
+    },
+  } as LogInPreview);
   //helper: Subject<any> = new Subject<any>();
   isLoggedIn: boolean = false;
   id: string = '';
   username: string = '';
+  private subscription: Subscription = new Subscription();
   constructor(
     private userService: UserService,
     private attractionService: AttractionService
   ) {
+    console.log('Result presenter/service');
+
     // this.helper
     //   .pipe(
     //     mergeMap(() =>
@@ -69,7 +80,7 @@ export class ResultService {
     }
 
     if (intent instanceof LogInIntent) {
-      this.userService
+      this.subscription = this.userService
         .login(intent.getUsername(), intent.getPassword())
         .pipe(
           tap((accountView) => {
@@ -91,33 +102,45 @@ export class ResultService {
     if (intent instanceof AddToAttractionListIntent) {
       this.attractionService
         .addAttraction(
-          this.id,
+          //this.id,
           intent.getName(),
           intent.getRating(),
           intent.getReview(),
           intent.getAddress(),
           intent.getPhotoUrl()
         )
-        .pipe(
-          map(() => {
-            this.attractionService
-              .getAttractions(this.id)
-              .pipe(
-                tap((res) =>
-                  this.state.next({
-                    isLoggedIn: true,
-                    account: {
-                      id: this.id,
-                      username: this.username,
-                      attractions: res,
-                    },
-                  })
-                )
-              )
-              .subscribe();
-          })
-        )
+        // .pipe(
+        //   map(() => {
+        //     this.attractionService
+        //       .getAttractions(this.id)
+        //       .pipe(
+        //         tap((res) =>
+        //           this.state.next({
+        //             isLoggedIn: true,
+        //             account: {
+        //               id: this.id,
+        //               username: this.username,
+        //               attractions: res,
+        //             },
+        //           })
+        //         )
+        //       )
+        //       .subscribe();
+        //  })
+        //)
         .subscribe();
     }
+
+    if (intent instanceof LogOutIntent) {
+      this.userService.logout();
+      this.state.next({
+        isLoggedIn: false,
+        account: { id: '', username: '', attractions: [] },
+      });
+    }
+  }
+
+  onViewDetach() {
+    this.subscription.unsubscribe();
   }
 }

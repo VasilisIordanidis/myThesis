@@ -7,6 +7,8 @@ import { LogInPreview } from 'src/app/models/LogInPreview';
 import { Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AccountView } from 'src/app/view-models/AccountView';
+import { LogOutIntent } from './LogOutIntent';
+import { AttractionListDialogComponent } from '../attraction-list-dialog/attraction-list-dialog.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -41,6 +43,12 @@ export class DashboardComponent implements OnInit {
   }
 
   onLogOut() {
-    this.login = false;
+    let intent = new LogOutIntent();
+    this.resultService.onIntent(intent);
+    console.log(this.login);
+  }
+
+  openAttractionListDialog() {
+    this.dialog.open(AttractionListDialogComponent);
   }
 }

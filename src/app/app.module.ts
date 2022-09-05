@@ -27,6 +27,7 @@ import { SearchComponent } from './components/search/search.component';
 import { UserService } from './service/user.service';
 import { AttractionService } from './service/attraction.service';
 import { AttractionListDialogComponent } from './components/attraction-list-dialog/attraction-list-dialog.component';
+import { ResultService } from './service/result.service';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,7 @@ import { AttractionListDialogComponent } from './components/attraction-list-dial
     MatFormFieldModule,
     MatCardModule,
   ],
-  providers: [PlacesService, UserService, AttractionService],
+  providers: [PlacesService, UserService, AttractionService, ResultService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
