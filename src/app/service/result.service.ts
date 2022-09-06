@@ -10,6 +10,8 @@ import { concatMap, map, mergeMap, takeUntil, tap } from 'rxjs/operators';
 import { LogInIntent } from '../components/login-dialog/LogInIntent';
 import { AddToAttractionListIntent } from '../components/home/AddToAttractionListIntent';
 import { LogOutIntent } from '../components/dashboard/LogOutIntent';
+import { RemoveAttractionIntent } from '../components/attraction-list-dialog/RemoveAttractionIntent';
+import { Attraction } from '../models/Attraction';
 
 @Injectable({
   providedIn: 'root',
@@ -83,18 +85,34 @@ export class ResultService {
       this.subscription = this.userService
         .login(intent.getUsername(), intent.getPassword())
         .pipe(
-          tap((accountView) => {
-            this.id = accountView.id;
-            this.username = accountView.username;
-            this.state.next({
-              isLoggedIn: true,
-              account: {
-                id: accountView.id,
-                username: accountView.username,
-                attractions: accountView.attractions,
-              },
-            });
-          })
+          // tap((accountView) => {
+          //   this.id = accountView.id;
+          //   this.username = accountView.username;
+          //   this.state.next({
+          //     isLoggedIn: true,
+          //     account: {
+          //       id: accountView.id,
+          //       username: accountView.username,
+          //       attractions: accountView.attractions,
+          //     },
+          //   });
+          //})
+          mergeMap((accountRes) =>
+            this.attractionService.getAttractions().pipe(
+              map((attractionRes) => {
+                this.id = accountRes.id;
+                this.username = accountRes.username;
+                this.state.next({
+                  isLoggedIn: true,
+                  account: {
+                    id: accountRes.id,
+                    username: accountRes.username,
+                    attractions: attractionRes.attractions,
+                  },
+                });
+              })
+            )
+          )
         )
         .subscribe();
     }
@@ -137,6 +155,14 @@ export class ResultService {
         isLoggedIn: false,
         account: { id: '', username: '', attractions: [] },
       });
+    }
+
+    if (intent instanceof RemoveAttractionIntent) {
+      console.log('from result service');
+
+      this.attractionService
+        .removeAttraction(intent.getName(), intent.getAddress())
+        .subscribe();
     }
   }
 

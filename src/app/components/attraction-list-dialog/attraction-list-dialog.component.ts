@@ -5,6 +5,7 @@ import { take, tap } from 'rxjs/operators';
 import { Attraction } from 'src/app/models/Attraction';
 import { LogInPreview } from 'src/app/models/LogInPreview';
 import { ResultService } from 'src/app/service/result.service';
+import { RemoveAttractionIntent } from './RemoveAttractionIntent';
 
 @Component({
   selector: 'app-attraction-list-dialog',
@@ -13,9 +14,9 @@ import { ResultService } from 'src/app/service/result.service';
   //providers: [{ provide: ResultService, useClass: ResultService }],
 })
 export class AttractionListDialogComponent implements OnInit, OnDestroy {
-  attractions!: Attraction[];
+  attractions: any = [];
   isLoggedIn: boolean = false;
-  state = {} as LogInPreview;
+  state!: LogInPreview;
   constructor(
     //@Inject(MAT_DIALOG_DATA) public data: { attractions: Attraction[] },
     private service: ResultService,
@@ -23,18 +24,18 @@ export class AttractionListDialogComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    console.log('hello from dialog');
-
     this.service.state
       .pipe(
         tap((res) => {
-          //console.log(res);
+          //console.log(res.json.data());
           this.state = res;
-          console.log(this.state);
-        }),
-        take(1)
+
+          this.attractions = res.account.attractions.values;
+        })
+        //take(1)
       )
       .subscribe();
+    console.log(this.state);
   }
 
   ngOnDestroy(): void {
@@ -45,5 +46,12 @@ export class AttractionListDialogComponent implements OnInit, OnDestroy {
     //console.log(this.state);
 
     this.dialogRef.close();
+  }
+
+  onRemoveAttraction(id: string, name: string, address: string) {
+    console.log('from component to delete');
+
+    let intent = new RemoveAttractionIntent(id, name, address);
+    this.service.onIntent(intent);
   }
 }

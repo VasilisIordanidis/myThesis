@@ -61,15 +61,8 @@ export class AttractionService {
   }
 
   removeAttraction(name: string, address: string) {
-    let params = new HttpParams()
-      //.set('id', id)
-      .set('name', name)
-      .set('address', address);
-    const body = {
-      name,
-      address,
-    };
-    let options = { body: body };
+    console.log('from service');
+    const options = { body: { name: name, address: address } };
     //const url = `${this.apiUrl}/${id}/attractions`;
     return this.http.delete(this.apiUrl, options).pipe(
       tap(() => this.subject.next()),
@@ -77,11 +70,11 @@ export class AttractionService {
     );
   }
 
-  getAttractions(): Observable<Attraction[]> {
+  getAttractions(): Observable<any> {
     //const url = `${this.apiUrl}/${id}/attractions`;
-    console.log('ran getAttractions');
+    //console.log('ran getAttractions');
 
-    let a = this.http.get<Attraction[]>(this.apiUrl);
+    let a = this.http.get<any>(this.apiUrl);
     //.pipe(catchError(AttractionService.handleError));
     let b = this.subject.pipe(mergeMap(() => a));
     return merge(a, b);

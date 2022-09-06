@@ -9,18 +9,23 @@
           item.name
         }}</mat-card-title>
       </div>
-      <button mat-icon-button>
-        <mat-icon>favorite_border</mat-icon>
+      <button
+        mat-icon-button
+        (click)="
+          onRemoveAttraction(this.state.account.id, item.name, item.address)
+        "
+      >
+        <mat-icon>remove_cirle</mat-icon>
       </button>
       <div class="card-content">
         <mat-card-content>Address: {{ item?.address }}</mat-card-content>
         <mat-card-content>Rating : {{ item?.rating }} / 5</mat-card-content>
         <mat-card-content>
-          Total ratings : {{ item.totalReviews }}
+          Total Reviews : {{ item?.totalReviews }}
         </mat-card-content>
       </div>
       <mat-card-content style="grid-area: img">
-        <img style="grid-area: img" [src]="item.imgUrl" />
+        <img style="grid-area: img" [src]="item?.imgUrl" />
       </mat-card-content>
     </mat-card>
   </ng-template>
