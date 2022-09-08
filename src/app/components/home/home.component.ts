@@ -4,7 +4,6 @@ import { InitialIntent } from './InitialIntent';
 import { tap } from 'rxjs/operators';
 import { PlacesService } from 'src/app/service/places.service';
 import { PlaceResult } from 'src/app/view-models/PlaceResults';
-import { AttractionService } from 'src/app/service/attraction.service';
 import { ResultService } from 'src/app/service/result.service';
 import { AddToAttractionListIntent } from './AddToAttractionListIntent';
 
@@ -60,9 +59,6 @@ export class HomeComponent implements OnInit {
 
   onAddToAttractionList(place: PlaceResult) {
     if (this.isLoggedIn == true) {
-      //console.log(this.isLoggedIn);
-      //console.log(place.photos[0]);
-      //place.photos;
       let intent = new AddToAttractionListIntent(
         place.name,
         place.address,

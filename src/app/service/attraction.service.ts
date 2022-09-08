@@ -36,7 +36,6 @@ export class AttractionService {
       .pipe(
         tap((res) => {
           this.apiUrl = `/api/user/${res}/attractions`;
-          console.log(this.apiUrl);
         })
       )
       .subscribe();
@@ -44,7 +43,6 @@ export class AttractionService {
   }
 
   addAttraction(
-    //id: string,
     name: string,
     rating: number,
     totalReviews: number,
@@ -52,8 +50,6 @@ export class AttractionService {
     imgUrl: string
   ) {
     const body = { name, rating, totalReviews, address, imgUrl };
-    //const url = `${this.apiUrl}/${id}/attractions`;
-
     return this.http.post(this.apiUrl, body).pipe(
       tap(() => this.subject.next()),
       catchError(AttractionService.handleError)
@@ -61,9 +57,7 @@ export class AttractionService {
   }
 
   removeAttraction(name: string, address: string) {
-    console.log('from service');
     const options = { body: { name: name, address: address } };
-    //const url = `${this.apiUrl}/${id}/attractions`;
     return this.http.delete(this.apiUrl, options).pipe(
       tap(() => this.subject.next()),
       catchError(AttractionService.handleError)
@@ -71,13 +65,8 @@ export class AttractionService {
   }
 
   getAttractions(): Observable<any> {
-    //const url = `${this.apiUrl}/${id}/attractions`;
-    //console.log('ran getAttractions');
-
     let a = this.http.get<any>(this.apiUrl);
-    //.pipe(catchError(AttractionService.handleError));
     let b = this.subject.pipe(mergeMap(() => a));
-    return merge(a, b);
-    //return a;
+    return merge(a, b).pipe(catchError(AttractionService.handleError));
   }
 }

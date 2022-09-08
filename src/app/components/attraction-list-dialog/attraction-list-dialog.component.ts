@@ -14,7 +14,7 @@ import { RemoveAttractionIntent } from './RemoveAttractionIntent';
   //providers: [{ provide: ResultService, useClass: ResultService }],
 })
 export class AttractionListDialogComponent implements OnInit, OnDestroy {
-  attractions: any = [];
+  //attractions: any = [];
   isLoggedIn: boolean = false;
   state!: LogInPreview;
   constructor(
@@ -27,15 +27,15 @@ export class AttractionListDialogComponent implements OnInit, OnDestroy {
     this.service.state
       .pipe(
         tap((res) => {
-          //console.log(res.json.data());
+          console.log('at init' + res);
           this.state = res;
 
-          this.attractions = res.account.attractions.values;
+          //this.attractions = res.account.attractions.values;
         })
         //take(1)
       )
       .subscribe();
-    console.log(this.state);
+    //console.log(this.state);
   }
 
   ngOnDestroy(): void {
@@ -43,14 +43,10 @@ export class AttractionListDialogComponent implements OnInit, OnDestroy {
   }
 
   closeDialog() {
-    //console.log(this.state);
-
     this.dialogRef.close();
   }
 
   onRemoveAttraction(id: string, name: string, address: string) {
-    console.log('from component to delete');
-
     let intent = new RemoveAttractionIntent(id, name, address);
     this.service.onIntent(intent);
   }

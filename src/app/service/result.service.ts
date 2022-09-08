@@ -35,6 +35,7 @@ export class ResultService {
     private attractionService: AttractionService
   ) {
     console.log('Result presenter/service');
+    console.log(this.state);
 
     // this.helper
     //   .pipe(
@@ -85,18 +86,6 @@ export class ResultService {
       this.subscription = this.userService
         .login(intent.getUsername(), intent.getPassword())
         .pipe(
-          // tap((accountView) => {
-          //   this.id = accountView.id;
-          //   this.username = accountView.username;
-          //   this.state.next({
-          //     isLoggedIn: true,
-          //     account: {
-          //       id: accountView.id,
-          //       username: accountView.username,
-          //       attractions: accountView.attractions,
-          //     },
-          //   });
-          //})
           mergeMap((accountRes) =>
             this.attractionService.getAttractions().pipe(
               map((attractionRes) => {
@@ -120,32 +109,13 @@ export class ResultService {
     if (intent instanceof AddToAttractionListIntent) {
       this.attractionService
         .addAttraction(
-          //this.id,
           intent.getName(),
           intent.getRating(),
           intent.getReview(),
           intent.getAddress(),
           intent.getPhotoUrl()
         )
-        // .pipe(
-        //   map(() => {
-        //     this.attractionService
-        //       .getAttractions(this.id)
-        //       .pipe(
-        //         tap((res) =>
-        //           this.state.next({
-        //             isLoggedIn: true,
-        //             account: {
-        //               id: this.id,
-        //               username: this.username,
-        //               attractions: res,
-        //             },
-        //           })
-        //         )
-        //       )
-        //       .subscribe();
-        //  })
-        //)
+        .pipe(tap(() => console.log(this.state)))
         .subscribe();
     }
 
@@ -162,6 +132,7 @@ export class ResultService {
 
       this.attractionService
         .removeAttraction(intent.getName(), intent.getAddress())
+        .pipe(tap(() => console.log(this.state)))
         .subscribe();
     }
   }

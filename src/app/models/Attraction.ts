@@ -1,7 +1,7 @@
 export interface Attraction {
   name: string;
   rating: number;
-  totalReviews: number;
+  total_reviews: number;
   address: string;
-  imgUrl: string;
+  photo: string;
 }
