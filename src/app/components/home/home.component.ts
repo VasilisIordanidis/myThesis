@@ -6,6 +6,7 @@ import { PlacesService } from 'src/app/service/places.service';
 import { PlaceResult } from 'src/app/view-models/PlaceResults';
 import { ResultService } from 'src/app/service/result.service';
 import { AddToAttractionListIntent } from './AddToAttractionListIntent';
+import { Attraction } from 'src/app/models/Attraction';
 
 @Component({
   selector: 'app-home',
@@ -16,6 +17,7 @@ import { AddToAttractionListIntent } from './AddToAttractionListIntent';
 export class HomeComponent implements OnInit {
   gmap!: any;
   attractions!: PlaceResult[];
+  savedAttractions!: Attraction[];
   isLoggedIn!: boolean;
   id!: string;
   constructor(
@@ -49,7 +51,7 @@ export class HomeComponent implements OnInit {
       .pipe(
         tap((res) => {
           //console.log(res);
-
+          this.savedAttractions = res.account.attractions;
           this.isLoggedIn = res.isLoggedIn;
           this.id = res.account.id;
         })

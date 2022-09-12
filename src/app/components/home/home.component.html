@@ -13,7 +13,9 @@
         }}</mat-card-title>
       </div>
       <button mat-icon-button (click)="onAddToAttractionList(item)">
-        <mat-icon>favorite_border</mat-icon>
+        <mat-icon btn [item]="item" [itemList]="savedAttractions"
+          >favorite_outline</mat-icon
+        >
       </button>
       <div class="card-content">
         <mat-card-content>Address: {{ item.address }}</mat-card-content>

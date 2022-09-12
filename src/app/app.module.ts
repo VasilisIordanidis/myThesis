@@ -28,6 +28,7 @@ import { UserService } from './service/user.service';
 import { AttractionService } from './service/attraction.service';
 import { AttractionListDialogComponent } from './components/attraction-list-dialog/attraction-list-dialog.component';
 import { ResultService } from './service/result.service';
+import { BtnDirective } from './components/home/btn.directive';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { ResultService } from './service/result.service';
     LoginDialogComponent,
     SearchComponent,
     AttractionListDialogComponent,
+    BtnDirective,
   ],
   imports: [
     BrowserModule,
