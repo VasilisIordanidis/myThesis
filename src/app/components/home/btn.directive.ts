@@ -20,25 +20,47 @@ export class BtnDirective implements OnChanges {
   constructor(private element: ElementRef, private renderer: Renderer2) {}
 
   ngOnChanges(changes: SimpleChanges) {
-    for (let attraction of this.itemList) {
-      if (
+    let attractionFound = this.itemList.find(
+      (attraction: any) =>
         attraction.name == this.item.name &&
         attraction.address == this.item.address
-      ) {
-        this.renderer.setProperty(
-          this.element.nativeElement,
-          'innerHTML',
-          'favorite'
-        );
-        this.renderer.setAttribute(this.element.nativeElement, 'style', 'warn');
-      } else {
-        //this.btnValue = 'favourite_outline';
-        this.renderer.setProperty(
-          this.element.nativeElement,
-          'innerHTML',
-          'favorite_outline'
-        );
-      }
+    );
+    if (attractionFound) {
+      this.renderer.setProperty(
+        this.element.nativeElement,
+        'innerHTML',
+        'favorite'
+      );
+      this.renderer.setAttribute(this.element.nativeElement, 'style', 'warn');
+      //break;
+    } else {
+      //this.btnValue = 'favourite_outline';
+      this.renderer.setProperty(
+        this.element.nativeElement,
+        'innerHTML',
+        'favorite_outline'
+      );
     }
+    // for (let attraction of this.itemList) {
+    //   if (
+    //     attraction.name == this.item.name &&
+    //     attraction.address == this.item.address
+    //   ) {
+    //     this.renderer.setProperty(
+    //       this.element.nativeElement,
+    //       'innerHTML',
+    //       'favorite'
+    //     );
+    //     this.renderer.setAttribute(this.element.nativeElement, 'style', 'warn');
+    //     break;
+    //   } else {
+    //     //this.btnValue = 'favourite_outline';
+    //     this.renderer.setProperty(
+    //       this.element.nativeElement,
+    //       'innerHTML',
+    //       'favorite_outline'
+    //     );
+    //   }
+    // }
   }
 }

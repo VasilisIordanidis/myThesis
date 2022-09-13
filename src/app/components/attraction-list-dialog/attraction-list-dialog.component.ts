@@ -13,7 +13,7 @@ import { RemoveAttractionIntent } from './RemoveAttractionIntent';
   styleUrls: ['./attraction-list-dialog.component.css'],
   //providers: [{ provide: ResultService, useClass: ResultService }],
 })
-export class AttractionListDialogComponent implements OnInit, OnDestroy {
+export class AttractionListDialogComponent implements OnInit {
   //attractions: any = [];
   isLoggedIn: boolean = false;
   state!: LogInPreview;
@@ -27,7 +27,7 @@ export class AttractionListDialogComponent implements OnInit, OnDestroy {
     this.service.state
       .pipe(
         tap((res) => {
-          console.log('at init' + res);
+          //console.log('at init' + res);
           this.state = res;
 
           //this.attractions = res.account.attractions.values;
@@ -38,9 +38,9 @@ export class AttractionListDialogComponent implements OnInit, OnDestroy {
     //console.log(this.state);
   }
 
-  ngOnDestroy(): void {
-    this.service.onViewDetach();
-  }
+  // ngOnDestroy(): void {
+  //   this.service.onViewDetach();
+  // }
 
   closeDialog() {
     this.dialogRef.close();

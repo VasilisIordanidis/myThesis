@@ -125,6 +125,7 @@ export class ResultService {
         isLoggedIn: false,
         account: { id: '', username: '', attractions: [] },
       });
+      this.subscription.unsubscribe();
     }
 
     if (intent instanceof RemoveAttractionIntent) {
@@ -135,9 +136,11 @@ export class ResultService {
         .pipe(tap(() => console.log(this.state)))
         .subscribe();
     }
+
+    // if(intent instanceof GetAttractionsIntent){
+    //   this.attractionService.getAttractions().subscribe();
+    // }
   }
 
-  onViewDetach() {
-    this.subscription.unsubscribe();
-  }
+  onViewDetach() {}
 }
