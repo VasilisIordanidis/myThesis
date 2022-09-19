@@ -29,6 +29,8 @@ import { AttractionService } from './service/attraction.service';
 import { AttractionListDialogComponent } from './components/attraction-list-dialog/attraction-list-dialog.component';
 import { ResultService } from './service/result.service';
 import { BtnDirective } from './components/home/btn.directive';
+import { UploadsComponent } from './components/uploads/uploads.component';
+import { UploadService } from './service/upload.service';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,7 @@ import { BtnDirective } from './components/home/btn.directive';
     SearchComponent,
     AttractionListDialogComponent,
     BtnDirective,
+    UploadsComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,7 +62,13 @@ import { BtnDirective } from './components/home/btn.directive';
     MatFormFieldModule,
     MatCardModule,
   ],
-  providers: [PlacesService, UserService, AttractionService, ResultService],
+  providers: [
+    PlacesService,
+    UserService,
+    AttractionService,
+    ResultService,
+    UploadService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

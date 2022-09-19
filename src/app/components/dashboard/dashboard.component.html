@@ -1,5 +1,5 @@
 <div class="container">
-  <h1>myThesis</h1>
+  <h1 [routerLink]="''">myThesis</h1>
   <app-search></app-search>
   <div class="menu">
     <mat-divider vertical="true"></mat-divider>
@@ -8,7 +8,11 @@
       <mat-icon>favorite</mat-icon>
     </button>
     <mat-divider vertical="true"></mat-divider>
-    <button mat-flat-button [matMenuTriggerFor]="menu" *ngIf="!login">
+    <button
+      mat-flat-button
+      [matMenuTriggerFor]="menu"
+      *ngIf="!this.state.isLoggedIn"
+    >
       Profile
       <mat-icon>account_circle</mat-icon>
     </button>
@@ -18,12 +22,16 @@
         Create account
       </button>
     </mat-menu>
-    <button mat-flat-button [matMenuTriggerFor]="logmenu" *ngIf="login">
-      {{ this.username }}
+    <button
+      mat-flat-button
+      [matMenuTriggerFor]="logmenu"
+      *ngIf="this.state.isLoggedIn"
+    >
+      {{ this.state.account.username }}
       <mat-icon>account_circle</mat-icon>
     </button>
     <mat-menu #logmenu="matMenu">
-      <button mat-menu-item (click)="openLoginDialog()">Info</button>
+      <button mat-menu-item [routerLink]="['uploads']">Uploads</button>
       <button mat-menu-item (click)="onLogOut()">Log out</button>
     </mat-menu>
     <mat-divider vertical="true"></mat-divider>

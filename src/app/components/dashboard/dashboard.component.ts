@@ -22,12 +22,16 @@ export class DashboardComponent implements OnInit {
   ) {}
   login: boolean = false;
   username!: string;
+  url!: string;
+  state!: LogInPreview;
   ngOnInit(): void {
     this.resultService.state
       .pipe(
         tap((value) => {
           this.login = value.isLoggedIn;
           this.username = value.account.username;
+          this.state = value;
+          this.url = `user/${value.account.id}/uploads`;
           //console.log(value);
         })
       )
