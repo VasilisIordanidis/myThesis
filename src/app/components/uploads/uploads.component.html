@@ -1,3 +1,6 @@
 <h3>Insert file to upload</h3>
+
+<img class="image" [src]="this.url" />
+<br />
 <input type="file" (change)="onFileSelected($event)" />
 <button (click)="onUpload()">Upload</button>
