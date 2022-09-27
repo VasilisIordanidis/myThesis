@@ -13,7 +13,7 @@ import { UserService } from './user.service';
   providedIn: 'root',
 })
 export class UploadService {
-  private apiUrl = '/api/user';
+  private apiUrl!: string;
   private subject = new Subject<any>();
   private static handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
@@ -40,19 +40,12 @@ export class UploadService {
       .subscribe();
   }
 
-  upload(file: File) {
-    if (file.type.match('image/*' || file.type.match('video/*'))) {
-      console.log(true);
-    } else {
-      //console.log(false);
-      window.alert('Only images and videos are supported');
-    }
-    //file.type == 'image';
-    const body = { file };
-    //return this.http.post(this.apiUrl, body);
+  upload(file: String) {
+    const body = { data: file };
+    return this.http.post(this.apiUrl, body);
   }
 
-  getFiles(): Observable<any> {
-    return this.http.get(this.apiUrl);
+  getFiles(): Observable<string[]> {
+    return this.http.get<string[]>(this.apiUrl);
   }
 }

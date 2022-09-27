@@ -1,6 +1,11 @@
 <h3>Insert file to upload</h3>
 
-<img class="image" [src]="this.url" />
+<img *ngIf="this.url != undefined" class="image" [src]="this.url" />
 <br />
 <input type="file" (change)="onFileSelected($event)" />
 <button (click)="onUpload()">Upload</button>
+<button (click)="get()">test</button>
+
+<div *ngFor="let file of this.files | async">
+  <!-- <img [src]="file[0]" /> -->
+</div>
