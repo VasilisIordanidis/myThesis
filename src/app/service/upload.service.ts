@@ -7,6 +7,7 @@ import {
 import { Injectable } from '@angular/core';
 import { Observable, Subject, throwError } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { FileAsBase64 } from '../models/FileAsBase64';
 import { UserService } from './user.service';
 
 @Injectable({
@@ -45,7 +46,7 @@ export class UploadService {
     return this.http.post(this.apiUrl, body);
   }
 
-  getFiles(): Observable<string[]> {
-    return this.http.get<string[]>(this.apiUrl);
+  getFiles(): Observable<FileAsBase64> {
+    return this.http.get<FileAsBase64>(this.apiUrl);
   }
 }

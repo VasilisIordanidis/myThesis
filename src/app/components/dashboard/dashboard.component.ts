@@ -9,6 +9,7 @@ import { tap } from 'rxjs/operators';
 import { AccountView } from 'src/app/view-models/AccountView';
 import { LogOutIntent } from './LogOutIntent';
 import { AttractionListDialogComponent } from '../attraction-list-dialog/attraction-list-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,7 +19,8 @@ import { AttractionListDialogComponent } from '../attraction-list-dialog/attract
 export class DashboardComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
-    private resultService: ResultService
+    private resultService: ResultService,
+    private router: Router
   ) {}
   login: boolean = false;
   username!: string;
@@ -50,6 +52,7 @@ export class DashboardComponent implements OnInit {
     let intent = new LogOutIntent();
     this.resultService.onIntent(intent);
     console.log(this.login);
+    this.router.navigateByUrl('');
   }
 
   openAttractionListDialog() {

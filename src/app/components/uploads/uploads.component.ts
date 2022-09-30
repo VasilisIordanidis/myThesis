@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Route, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { FileAsBase64 } from 'src/app/models/FileAsBase64';
+import { LogInPreview } from 'src/app/models/LogInPreview';
+import { ResultService } from 'src/app/service/result.service';
+
 import { UploadService } from 'src/app/service/upload.service';
 
 @Component({
@@ -10,11 +15,21 @@ import { UploadService } from 'src/app/service/upload.service';
 })
 export class UploadsComponent implements OnInit {
   selectedFile!: File;
-  files!: Observable<string[]>;
+  files!: Observable<FileAsBase64>;
+  test!: FileAsBase64;
   url!: any;
-  constructor(private uploadService: UploadService) {}
+  state!: LogInPreview;
+  constructor(
+    private uploadService: UploadService,
+    private resultService: ResultService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
+    this.resultService.state.pipe(tap((res) => (this.state = res))).subscribe();
+    if (!this.state.isLoggedIn) {
+      this.router.navigateByUrl('');
+    }
     this.files = this.uploadService.getFiles();
   }
 
@@ -27,7 +42,7 @@ export class UploadsComponent implements OnInit {
       var reader = new FileReader();
       reader.onload = (event: any) => {
         this.url = event.target.result;
-        console.log(typeof this.url);
+        console.log(this.url);
       };
       reader.onerror = (event: any) => {
         console.log('File could not be read: ' + event.target.error.code);
@@ -49,7 +64,12 @@ export class UploadsComponent implements OnInit {
   get() {
     this.uploadService
       .getFiles()
-      .pipe(tap((res) => console.log(res)))
+      .pipe(
+        tap((res) => {
+          this.test = res;
+          console.log(res.set[0].file);
+        })
+      )
       .subscribe();
   }
 }
