@@ -4,7 +4,7 @@ import {
   HttpErrorResponse,
   HttpParams,
 } from '@angular/common/http';
-import { Observable, Subject, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { AccountView } from '../view-models/AccountView';
 
@@ -13,7 +13,7 @@ import { AccountView } from '../view-models/AccountView';
 })
 export class UserService {
   private apiUrl = '/api/user';
-  accountId: Subject<string> = new Subject();
+  accountId: BehaviorSubject<string>;
   private static handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.
@@ -31,6 +31,9 @@ export class UserService {
   }
   constructor(private http: HttpClient) {
     console.log('User Service');
+    this.accountId = new BehaviorSubject(
+      JSON.parse(localStorage.getItem('id') as string)
+    );
   }
 
   createUser(
@@ -51,12 +54,24 @@ export class UserService {
       .set('username', username)
       .set('password', password);
     return this.http.get<AccountView>(this.apiUrl, { params }).pipe(
-      tap((res) => this.accountId.next(res.id)),
+      tap((res) => {
+        this.accountId.next(res.id);
+        localStorage.setItem('isLoggedIn', JSON.stringify(true));
+        localStorage.setItem('id', JSON.stringify(res.id as string));
+        localStorage.setItem(
+          'username',
+          JSON.stringify(res.username as string)
+        );
+      }),
       catchError(UserService.handleError)
     );
   }
 
   logout() {
-    this.accountId.next(undefined);
+    this.accountId.next('');
+    localStorage.setItem('isLoggedIn', JSON.stringify(false));
+    localStorage.setItem('id', JSON.stringify(''));
+    localStorage.setItem('username', JSON.stringify(''));
+    localStorage.setItem('attractions', JSON.stringify([]));
   }
 }

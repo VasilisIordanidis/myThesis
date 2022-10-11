@@ -1,12 +1,7 @@
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpEvent,
-  HttpRequest,
-} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject, throwError } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { FileAsBase64 } from '../models/FileAsBase64';
 import { UserService } from './user.service';
 
@@ -15,7 +10,6 @@ import { UserService } from './user.service';
 })
 export class UploadService {
   private apiUrl!: string;
-  private subject = new Subject<any>();
   private static handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.
@@ -43,10 +37,14 @@ export class UploadService {
 
   upload(file: String) {
     const body = { data: file };
-    return this.http.post(this.apiUrl, body);
+    return this.http
+      .post(this.apiUrl, body)
+      .pipe(catchError(UploadService.handleError));
   }
 
   getFiles(): Observable<FileAsBase64> {
-    return this.http.get<FileAsBase64>(this.apiUrl);
+    return this.http
+      .get<FileAsBase64>(this.apiUrl)
+      .pipe(catchError(UploadService.handleError));
   }
 }

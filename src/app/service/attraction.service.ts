@@ -1,13 +1,8 @@
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpParams,
-} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { merge, Observable, Subject } from 'rxjs';
 import { throwError } from 'rxjs/internal/observable/throwError';
 import { catchError, mergeMap, tap } from 'rxjs/operators';
-import { Attraction } from '../models/Attraction';
 import { UserService } from './user.service';
 
 @Injectable({
@@ -67,6 +62,11 @@ export class AttractionService {
   getAttractions(): Observable<any> {
     let a = this.http.get<any>(this.apiUrl);
     let b = this.subject.pipe(mergeMap(() => a));
-    return merge(a, b).pipe(catchError(AttractionService.handleError));
+    return merge(a, b).pipe(
+      tap((res) => {
+        localStorage.setItem('attractions', JSON.stringify(res.attractions));
+      }),
+      catchError(AttractionService.handleError)
+    );
   }
 }
