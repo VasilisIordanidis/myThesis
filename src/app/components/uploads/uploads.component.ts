@@ -11,7 +11,7 @@ import { UploadService } from 'src/app/service/upload.service';
 @Component({
   selector: 'app-uploads',
   templateUrl: './uploads.component.html',
-  styleUrls: ['./uploads.component.css'],
+  styleUrls: ['./uploads.component.scss'],
 })
 export class UploadsComponent implements OnInit {
   selectedFile!: File;

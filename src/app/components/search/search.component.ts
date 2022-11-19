@@ -11,7 +11,7 @@ import { SearchPresenter } from './SearchPresenter';
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
-  styleUrls: ['./search.component.css'],
+  styleUrls: ['./search.component.scss'],
   providers: [{ provide: SearchPresenter, useClass: SearchPresenter }],
 })
 export class SearchComponent implements OnInit {

@@ -10,7 +10,7 @@ import { RemoveAttractionIntent } from './RemoveAttractionIntent';
 @Component({
   selector: 'app-attraction-list-dialog',
   templateUrl: './attraction-list-dialog.component.html',
-  styleUrls: ['./attraction-list-dialog.component.css'],
+  styleUrls: ['./attraction-list-dialog.component.scss'],
   //providers: [{ provide: ResultService, useClass: ResultService }],
 })
 export class AttractionListDialogComponent implements OnInit {

@@ -31,6 +31,7 @@ import { ResultService } from './service/result.service';
 import { BtnDirective } from './components/home/btn.directive';
 import { UploadsComponent } from './components/uploads/uploads.component';
 import { UploadService } from './service/upload.service';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { UploadService } from './service/upload.service';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatCardModule,
+    MatSlideToggleModule,
   ],
   providers: [
     PlacesService,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { CreateAccountDialogComponent } from '../create-account-dialog/create-account-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
@@ -8,17 +8,20 @@ import { tap } from 'rxjs/operators';
 import { LogOutIntent } from './LogOutIntent';
 import { AttractionListDialogComponent } from '../attraction-list-dialog/attraction-list-dialog.component';
 import { Router } from '@angular/router';
+import { MatButtonToggleChange } from '@angular/material/button-toggle';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css'],
+  styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private resultService: ResultService,
-    private router: Router
+    private router: Router,
+    private renderer: Renderer2
   ) {}
   login: boolean = false;
   username!: string;
@@ -55,5 +58,15 @@ export class DashboardComponent implements OnInit {
 
   openAttractionListDialog() {
     this.dialog.open(AttractionListDialogComponent);
+  }
+
+  changeTheme(event: MatSlideToggleChange) {
+    // event.checked
+    //   ? this.renderer.addClass(document.body, 'darkMode')
+    //   : this.renderer.removeClass(document.body, 'darkMode');
+    if (event.checked) {
+      this.renderer.addClass(document.body, 'darkMode');
+      console.log(document.body.className);
+    }
   }
 }

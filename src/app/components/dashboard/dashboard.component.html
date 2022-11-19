@@ -35,5 +35,8 @@
       <button mat-menu-item (click)="onLogOut()">Log out</button>
     </mat-menu>
     <mat-divider vertical="true"></mat-divider>
+    <mat-icon>light_mode</mat-icon>
+    <mat-slide-toggle (change)="changeTheme($event)"></mat-slide-toggle>
+    <mat-icon>dark_mode</mat-icon>
   </div>
 </div>
