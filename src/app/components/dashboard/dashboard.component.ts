@@ -61,12 +61,8 @@ export class DashboardComponent implements OnInit {
   }
 
   changeTheme(event: MatSlideToggleChange) {
-    // event.checked
-    //   ? this.renderer.addClass(document.body, 'darkMode')
-    //   : this.renderer.removeClass(document.body, 'darkMode');
-    if (event.checked) {
-      this.renderer.addClass(document.body, 'darkMode');
-      console.log(document.body.className);
-    }
+    event.checked
+      ? this.renderer.addClass(document.body, 'darkMode')
+      : this.renderer.removeClass(document.body, 'darkMode');
   }
 }
