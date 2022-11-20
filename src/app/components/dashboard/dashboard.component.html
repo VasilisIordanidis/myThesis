@@ -1,5 +1,8 @@
 <div class="container">
-  <h1 [routerLink]="''">myThesis</h1>
+  <span class="logo">
+    <h1 [routerLink]="''">myThesis</h1>
+  </span>
+
   <app-search></app-search>
   <div class="menu">
     <mat-divider vertical="true"></mat-divider>
@@ -7,7 +10,9 @@
       Saved
       <mat-icon>favorite</mat-icon>
     </button>
+
     <mat-divider vertical="true"></mat-divider>
+
     <button
       mat-flat-button
       [matMenuTriggerFor]="menu"
@@ -34,9 +39,13 @@
       <button mat-menu-item [routerLink]="['uploads']">Uploads</button>
       <button mat-menu-item (click)="onLogOut()">Log out</button>
     </mat-menu>
+
     <mat-divider vertical="true"></mat-divider>
-    <mat-icon>light_mode</mat-icon>
-    <mat-slide-toggle (change)="changeTheme($event)"></mat-slide-toggle>
-    <mat-icon>dark_mode</mat-icon>
+
+    <span class="toggler">
+      <mat-icon>light_mode</mat-icon>
+      <mat-slide-toggle (change)="changeTheme($event)"></mat-slide-toggle>
+      <mat-icon>dark_mode</mat-icon>
+    </span>
   </div>
 </div>

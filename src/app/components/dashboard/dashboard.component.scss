@@ -5,9 +5,11 @@
   place-content: center space-evenly;
   align-items: center;
 }
-h1 {
+.logo {
   display: inline-flex;
+  align-content: center;
 }
+
 ::ng-deep .mat-form-field-outline-start {
   border-radius: 28px 0 0 28px !important;
   min-width: 28px !important;
@@ -22,4 +24,8 @@ h1 {
 }
 .menu {
   display: inline-flex;
+}
+.toggler {
+  display: inline-flex;
+  align-items: center;
 }
