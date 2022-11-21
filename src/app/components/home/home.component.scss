@@ -5,8 +5,8 @@
 }
 
 .map {
-  width: 65%;
-  height: 85%;
+  width: 60%;
+  height: 80%;
   display: inline-block;
 }
 .card {
@@ -19,9 +19,10 @@
   place-items: center;
   grid-gap: 1%;
 }
+
 .card-marker {
   place-content: center;
-
+  width: 5px;
   grid-area: marker;
 }
 

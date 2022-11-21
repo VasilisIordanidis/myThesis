@@ -6,7 +6,15 @@
   align-items: center;
 }
 .logo {
-  display: inline-flex;
+  display: flex;
+
+  text-align: center;
+}
+
+.searchWrapper {
+  display: flex;
+  align-items: center;
+  text-align: center;
   align-content: center;
 }
 

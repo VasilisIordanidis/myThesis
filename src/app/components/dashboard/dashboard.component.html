@@ -1,9 +1,12 @@
 <div class="container">
-  <span class="logo">
+  <div class="logo">
     <h1 [routerLink]="''">myThesis</h1>
-  </span>
+  </div>
 
-  <app-search></app-search>
+  <div class="searchWrapper">
+    <app-search></app-search>
+  </div>
+
   <div class="menu">
     <mat-divider vertical="true"></mat-divider>
     <button mat-flat-button (click)="openAttractionListDialog()">
