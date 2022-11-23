@@ -7,33 +7,31 @@
 }
 .logo {
   display: flex;
-
+  place-items: center;
   text-align: center;
+  h1 {
+    display: inline-flex;
+    margin: 0;
+  }
 }
 
 .searchWrapper {
   display: flex;
-  align-items: center;
-  text-align: center;
-  align-content: center;
+  place-items: center;
 }
 
-::ng-deep .mat-form-field-outline-start {
-  border-radius: 28px 0 0 28px !important;
-  min-width: 28px !important;
-}
-
-::ng-deep .mat-form-field-outline-end {
-  border-radius: 0 28px 28px 0 !important;
-}
-
-::ng-deep .mat-form-field {
-  width: 300px;
-}
 .menu {
   display: inline-flex;
 }
 .toggler {
   display: inline-flex;
   align-items: center;
+}
+
+@media screen and (max-width: 720px) {
+  .container {
+    flex-direction: column;
+    place-items: center;
+    height: fit-content;
+  }
 }

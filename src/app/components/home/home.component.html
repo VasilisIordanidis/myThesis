@@ -1,33 +1,40 @@
-<div class="list">
-  <p *ngIf="attractions.length === 0; else attractionList">
-    Select a city to view attractions
-  </p>
-  <ng-template #attractionList>
-    <mat-card class="card" *ngFor="let item of attractions">
-      <div class="card-marker">
-        <img [src]="item.marker_icon" />
-      </div>
-      <div class="card-header">
-        <mat-card-title style="place-self: start">{{
-          item.name
-        }}</mat-card-title>
-      </div>
-      <button mat-icon-button (click)="onAddToAttractionList(item)">
-        <mat-icon btn [item]="item" [itemList]="savedAttractions"
-          >favorite_outline</mat-icon
+<div class="wrapper">
+  <div class="list">
+    <p *ngIf="attractions.length === 0; else attractionList">
+      Select a city to view attractions
+    </p>
+    <ng-template #attractionList>
+      <mat-card class="card" *ngFor="let item of attractions">
+        <div class="card-marker">
+          <img [src]="item.marker_icon" />
+        </div>
+        <div class="card-header">
+          <mat-card-title>{{ item.name }}</mat-card-title>
+        </div>
+        <button
+          mat-icon-button
+          (click)="onAddToAttractionList(item)"
+          class="header-img"
         >
-      </button>
-      <div class="card-content">
-        <mat-card-content>Address: {{ item.address }}</mat-card-content>
-        <mat-card-content>Rating : {{ item?.rating }} / 5</mat-card-content>
-        <mat-card-content>
-          Total ratings : {{ item.total_reviews }}
+          <mat-icon btn [item]="item" [itemList]="savedAttractions"
+            >favorite_outline</mat-icon
+          >
+        </button>
+        <div class="card-content">
+          <mat-card-content>Address: {{ item.address }}</mat-card-content>
+          <mat-card-content>Rating : {{ item?.rating }} / 5</mat-card-content>
+          <mat-card-content>
+            Total ratings : {{ item.total_reviews }}
+          </mat-card-content>
+        </div>
+        <mat-card-content
+          style="grid-area: img"
+          *ngFor="let img of item.photos"
+        >
+          <img style="grid-area: img" [src]="img" />
         </mat-card-content>
-      </div>
-      <mat-card-content style="grid-area: img" *ngFor="let img of item.photos">
-        <img style="grid-area: img" [src]="img" />
-      </mat-card-content>
-    </mat-card>
-  </ng-template>
+      </mat-card>
+    </ng-template>
+  </div>
+  <div class="map" id="map" #map></div>
 </div>
-<div class="map" id="map" #map></div>

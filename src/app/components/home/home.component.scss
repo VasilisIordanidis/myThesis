@@ -1,39 +1,53 @@
+.wrapper {
+  height: fit-content;
+  width: 100%;
+  margin-left: 3%;
+  margin-right: 3%;
+  display: flex;
+  //place-items: center;
+}
 .list {
-  width: 35%;
+  width: 45%;
   height: 85%;
-  float: left;
+  min-width: fit-content;
+  text-align: center;
+  text-justify: auto;
+  //scroll-behavior: smooth;
 }
 
 .map {
-  width: 60%;
+  width: 45%;
   height: 80%;
-  display: inline-block;
+  min-width: 250px;
+  min-height: 300px;
 }
 .card {
   display: grid;
   grid-template-areas:
-    "marker header header header-img"
-    "marker content . img"
-    "marker content . img"
-    "marker content . img";
-  place-items: center;
+    "marker header header-img"
+    "marker content img"
+    "marker content img"
+    "marker content img";
+
   grid-gap: 1%;
 }
 
 .card-marker {
-  place-content: center;
-  width: 5px;
+  place-self: center;
+  max-width: 20px;
+  min-width: 20px;
   grid-area: marker;
 }
 
 .card-header {
   grid-area: header;
-  place-content: strech;
-  display: flex;
+  text-align: left;
   width: 100%;
+}
+.header-img {
+  place-self: center;
 }
 .card-content {
   grid-area: content;
-  display: flex;
-  flex-direction: column;
+  text-align: left;
 }
