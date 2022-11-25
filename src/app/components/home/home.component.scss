@@ -1,26 +1,24 @@
 .wrapper {
-  height: fit-content;
+  height: 85%;
   width: 100%;
-  margin-left: 3%;
-  margin-right: 3%;
   display: flex;
-  //place-items: center;
+  justify-content: space-around;
 }
 .list {
   width: 45%;
   height: 85%;
   min-width: fit-content;
+  max-height: fit-content;
   text-align: center;
-  text-justify: auto;
-  //scroll-behavior: smooth;
+  overflow-y: auto;
 }
 
 .map {
   width: 45%;
   height: 80%;
-  min-width: 250px;
-  min-height: 300px;
+  place-self: start;
 }
+
 .card {
   display: grid;
   grid-template-areas:
@@ -28,26 +26,45 @@
     "marker content img"
     "marker content img"
     "marker content img";
-
   grid-gap: 1%;
+  grid-template-columns: 30px 250px 150px;
 }
 
 .card-marker {
   place-self: center;
-  max-width: 20px;
-  min-width: 20px;
   grid-area: marker;
 }
 
 .card-header {
   grid-area: header;
-  text-align: left;
+  text-align: start;
   width: 100%;
 }
+
 .header-img {
   place-self: center;
 }
+
 .card-content {
   grid-area: content;
-  text-align: left;
+  text-align: start;
+}
+
+@media screen and (max-width: 768px) {
+  .wrapper {
+    flex-direction: column-reverse;
+    overflow-y: scroll;
+    justify-content: flex-end;
+    height: 100%;
+  }
+  .map {
+    place-self: center;
+    width: 90%;
+    height: 90%;
+  }
+  .list {
+    place-self: center;
+    height: fit-content;
+    overflow: hidden;
+  }
 }
