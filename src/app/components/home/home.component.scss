@@ -53,18 +53,34 @@
 @media screen and (max-width: 768px) {
   .wrapper {
     flex-direction: column-reverse;
-    overflow-y: scroll;
+    overflow-anchor: auto;
     justify-content: flex-end;
     height: 100%;
   }
   .map {
     place-self: center;
-    width: 90%;
-    height: 90%;
+    min-width: 80%;
+    min-height: 80%;
   }
   .list {
     place-self: center;
     height: fit-content;
-    overflow: hidden;
+    overflow: visible;
+  }
+
+  @media screen and (max-width: 425px) {
+    .card {
+      grid-template-columns: 20px 240px 120px;
+    }
+  }
+  @media screen and (max-width: 375px) {
+    .card {
+      grid-template-columns: 20px 200px 110px;
+    }
+  }
+  @media screen and (max-width: 320px) {
+    .card {
+      grid-template-columns: 20px 165px 100px;
+    }
   }
 }
