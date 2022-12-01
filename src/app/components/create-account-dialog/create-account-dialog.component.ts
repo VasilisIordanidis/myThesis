@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { mergeMap } from 'rxjs/operators';
-import { Intent } from 'src/app/models/Intent';
 import { ResultService } from 'src/app/service/result.service';
-import { UserService } from 'src/app/service/user.service';
 import { CreateAccountIntent } from './CreateAccountIntent';
 
 @Component({
@@ -28,14 +25,15 @@ export class CreateAccountDialogComponent implements OnInit {
     username: [''],
     password: [
       '',
-      // Validators.pattern(
-      //   '^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[@$!%*?&])[A-Za-zd@$!%*?&]{8,}$'
-      // ),
+      Validators.pattern(
+        //'^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\\D*\\d)[A-Za-z\\d]{8,}$'
+        '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*\\W|_).{8,}$'
+      ),
     ],
   });
 
   closeDialog() {
-    this.dialogRef.close;
+    this.dialogRef.close();
   }
 
   onCreateUserIntent() {
@@ -52,6 +50,6 @@ export class CreateAccountDialogComponent implements OnInit {
       password
     );
     this.resultService.onIntent(intent);
-    this.dialogRef.close;
+    this.dialogRef.close();
   }
 }

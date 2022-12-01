@@ -5,7 +5,7 @@
 .icon-wrapper {
   display: flex;
   flex-wrap: wrap;
-  place-items: space-around;
+  justify-content: space-evenly;
 }
 h3 {
   place-self: center;
