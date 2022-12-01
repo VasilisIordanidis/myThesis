@@ -6,6 +6,6 @@
 <br />
 <h3>Your saved files</h3>
 <br />
-<div *ngFor="let x of (this.files | async)?.set">
+<div *ngFor="let x of (this.files | async)?.set" class="icon-wrapper">
   <img src="{{ x.file }}" />
 </div>
